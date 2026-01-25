@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion-Based Music Recommendation</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<div class="app">
+    <h1>🎧 Emotion-Based Music Recommendation</h1>
+    <p class="tagline">Your mood, your music — powered by AI</p>
+
+    <div class="container">
+
+        <form action="/emoji" method="post" id="emojiForm">
+            <input type="hidden" name="emoji" id="selectedEmoji">
+
+            <div class="emoji-box">
+                <div class="emoji-wrapper" data-label="Happy">
+                    <button type="button" class="emoji-btn" data-emoji="😊" data-name="Happy">😊</button>
+                    <span class="tooltip">Happy</span>
+                </div>
+                <div class="emoji-wrapper" data-label="Sad">
+                    <button type="button" class="emoji-btn" data-emoji="😢" data-name="Sad">😢</button>
+                    <span class="tooltip">Sad</span>
+                </div>
+                <div class="emoji-wrapper" data-label="Angry">
+                    <button type="button" class="emoji-btn" data-emoji="😡" data-name="Angry">😡</button>
+                    <span class="tooltip">Angry</span>
+                </div>
+                <div class="emoji-wrapper" data-label="Love">
+                    <button type="button" class="emoji-btn" data-emoji="❤️" data-name="Love">❤️</button>
+                    <span class="tooltip">Love</span>
+                </div>
+            </div>
+
+            <div class="selected-text" id="selectedText">No mood selected</div>
+
+            <button type="submit" id="emojiSubmit" disabled>Submit Mood</button>
+        </form>
+
+        <div class="divider">OR</div>
+
+        <form action="/detect" method="post">
+            <button class="camera-btn" type="submit">📷 Detect Emotion</button>
+        </form>
+
+        <div class="result spotify-theme">
+            <h2>Detected Emotion</h2>
+
+            <div class="track-list">
+                <div class="track">
+                    <div class="track-left">
+                        <button class="play-btn">▶</button>
+                        <span class="track-name">Song Name</span>
+                    </div>
+                    <div class="track-right">
+                        <button class="icon-btn">❤️</button>
+                        <button class="icon-btn">⋮</button>
+                    </div>
+                </div>
+            </div>
+
+            <form action="/" method="get">
+                <button class="reset-btn">Detect Again</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="credit">Made by Abhee B Vasava</div>
+</div>
+
+<script src="static/script.js"></script>
+</body>
+</html>

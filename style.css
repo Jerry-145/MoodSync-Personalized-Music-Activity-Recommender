@@ -1,0 +1,215 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1db954, #121212);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    margin-bottom: 6px;
+}
+
+.tagline {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.container {
+    background: #181818;
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+}
+
+.divider {
+    margin: 18px 0;
+    opacity: 0.6;
+}
+
+.emoji-box {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.emoji-btn {
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: #2a2a2a;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.emoji-btn:hover {
+    transform: scale(1.15);
+}
+
+.emoji-btn.selected {
+    background: #1db954;
+    box-shadow: 0 0 18px #1db954;
+}
+
+#emojiSubmit {
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    background: #1db954;
+    color: black;
+}
+
+#emojiSubmit:disabled {
+    background: #777;
+    cursor: not-allowed;
+}
+
+.camera-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    background: #0b5ed7;
+    color: white;
+}
+
+.spotify-theme {
+    margin-top: 25px;
+    background: #121212;
+    border-radius: 14px;
+    padding: 20px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.track-list {
+    margin-top: 15px;
+}
+
+.track {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.track:hover {
+    background: #1a1a1a;
+}
+
+.track-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.play-btn {
+    background: #1db954;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.track-name {
+    font-size: 15px;
+}
+
+.track-right {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.icon-btn.active {
+    color: #1db954;
+}
+
+.reset-btn {
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid #1db954;
+    color: #1db954;
+    padding: 10px 22px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.credit {
+    margin-top: 18px;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.selected-text {
+    margin: 10px 0 15px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.emoji-wrapper {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.emoji-wrapper:hover .tooltip {
+    opacity: 1;
+}
+
