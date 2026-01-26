@@ -13,20 +13,16 @@ body {
 }
 
 .app {
-    width: 100%;
     max-width: 440px;
+    width: 100%;
     padding: 20px;
     text-align: center;
     color: white;
 }
 
-h1 {
-    margin-bottom: 6px;
-}
-
 .tagline {
-    font-size: 14px;
     opacity: 0.85;
+    font-size: 14px;
 }
 
 .container {
@@ -46,7 +42,11 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
+}
+
+.emoji-wrapper {
+    position: relative;
 }
 
 .emoji-btn {
@@ -55,8 +55,8 @@ h1 {
     height: 60px;
     border-radius: 50%;
     border: none;
-    cursor: pointer;
     background: #2a2a2a;
+    cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -69,29 +69,48 @@ h1 {
     box-shadow: 0 0 18px #1db954;
 }
 
-#emojiSubmit {
+.tooltip {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.emoji-wrapper:hover .tooltip {
+    opacity: 1;
+}
+
+.selected-text {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+button {
     width: 100%;
     padding: 12px;
     border-radius: 25px;
     border: none;
     font-size: 15px;
     cursor: pointer;
+    margin-top: 10px;
+}
+
+#emojiSubmit {
     background: #1db954;
     color: black;
 }
 
 #emojiSubmit:disabled {
     background: #777;
-    cursor: not-allowed;
 }
 
 .camera-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 25px;
-    border: none;
-    font-size: 15px;
-    cursor: pointer;
     background: #0b5ed7;
     color: white;
 }
@@ -101,11 +120,6 @@ h1 {
     background: #121212;
     border-radius: 14px;
     padding: 20px;
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-.track-list {
-    margin-top: 15px;
 }
 
 .track {
@@ -127,17 +141,12 @@ h1 {
 }
 
 .play-btn {
-    background: #1db954;
-    border-radius: 50%;
     width: 34px;
     height: 34px;
+    border-radius: 50%;
     border: none;
+    background: #1db954;
     cursor: pointer;
-    font-weight: bold;
-}
-
-.track-name {
-    font-size: 15px;
 }
 
 .track-right {
@@ -153,63 +162,51 @@ h1 {
     cursor: pointer;
 }
 
-.icon-btn.active {
+.like-btn.liked {
     color: #1db954;
 }
 
-.reset-btn {
-    margin-top: 20px;
-    background: transparent;
-    border: 1px solid #1db954;
-    color: #1db954;
-    padding: 10px 22px;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.credit {
-    margin-top: 18px;
-    font-size: 13px;
-    opacity: 0.75;
-}
-
-.selected-text {
-    margin: 10px 0 15px;
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-.emoji-wrapper {
+.dropdown {
     position: relative;
 }
 
-.tooltip {
+.dropdown-content {
+    display: none;
     position: absolute;
-    bottom: -28px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #000;
-    color: #fff;
-    padding: 4px 8px;
-    font-size: 12px;
+    right: 0;
+    background: #282828;
     border-radius: 6px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
+    padding: 8px;
+    width: 160px;
 }
 
-.emoji-wrapper:hover .tooltip {
-    opacity: 1;
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
+.option {
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #3a3a3a;
+    border-radius: 4px;
+}
+
+.track.added {
+    background: rgba(29,185,84,0.2);
+}
+
+.reset-btn {
+    background: transparent;
+    border: 1px solid #1db954;
+    color: #1db954;
+}
+
+.credit {
+    margin-top: 15px;
+    font-size: 13px;
+    opacity: 0.7;
+}

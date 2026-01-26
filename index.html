@@ -13,58 +13,77 @@
 
     <div class="container">
 
-        <form action="/emoji" method="post" id="emojiForm">
-            <input type="hidden" name="emoji" id="selectedEmoji">
+        <form id="emojiForm">
+            <input type="hidden" id="selectedEmoji">
 
             <div class="emoji-box">
-                <div class="emoji-wrapper" data-label="Happy">
+                <div class="emoji-wrapper">
                     <button type="button" class="emoji-btn" data-emoji="😊" data-name="Happy">😊</button>
                     <span class="tooltip">Happy</span>
                 </div>
-                <div class="emoji-wrapper" data-label="Sad">
+                <div class="emoji-wrapper">
                     <button type="button" class="emoji-btn" data-emoji="😢" data-name="Sad">😢</button>
                     <span class="tooltip">Sad</span>
                 </div>
-                <div class="emoji-wrapper" data-label="Angry">
+                <div class="emoji-wrapper">
                     <button type="button" class="emoji-btn" data-emoji="😡" data-name="Angry">😡</button>
                     <span class="tooltip">Angry</span>
                 </div>
-                <div class="emoji-wrapper" data-label="Love">
+                <div class="emoji-wrapper">
                     <button type="button" class="emoji-btn" data-emoji="❤️" data-name="Love">❤️</button>
                     <span class="tooltip">Love</span>
                 </div>
             </div>
 
             <div class="selected-text" id="selectedText">No mood selected</div>
-
-            <button type="submit" id="emojiSubmit" disabled>Submit Mood</button>
+            <button id="emojiSubmit" disabled>Submit Mood</button>
         </form>
 
         <div class="divider">OR</div>
-
-        <form action="/detect" method="post">
-            <button class="camera-btn" type="submit">📷 Detect Emotion</button>
-        </form>
+        <button class="camera-btn">📷 Detect Emotion</button>
 
         <div class="result spotify-theme">
-            <h2>Detected Emotion</h2>
+            <h2>Recommended Songs</h2>
 
             <div class="track-list">
+
                 <div class="track">
                     <div class="track-left">
                         <button class="play-btn">▶</button>
-                        <span class="track-name">Song Name</span>
+                        <span class="track-name">Happy Vibes</span>
                     </div>
                     <div class="track-right">
-                        <button class="icon-btn">❤️</button>
-                        <button class="icon-btn">⋮</button>
+                        <button class="icon-btn like-btn">❤️</button>
+                        <div class="dropdown">
+                            <button class="icon-btn">⋮</button>
+                            <div class="dropdown-content">
+                                <div class="option add-playlist">➕ Add to Playlist</div>
+                            </div>
+                        </div>
                     </div>
+                    <audio src="static/audio/happy1.mp3"></audio>
                 </div>
+
+                <div class="track">
+                    <div class="track-left">
+                        <button class="play-btn">▶</button>
+                        <span class="track-name">Feel Good Beats</span>
+                    </div>
+                    <div class="track-right">
+                        <button class="icon-btn like-btn">❤️</button>
+                        <div class="dropdown">
+                            <button class="icon-btn">⋮</button>
+                            <div class="dropdown-content">
+                                <div class="option add-playlist">➕ Add to Playlist</div>
+                            </div>
+                        </div>
+                    </div>
+                    <audio src="static/audio/happy2.mp3"></audio>
+                </div>
+
             </div>
 
-            <form action="/" method="get">
-                <button class="reset-btn">Detect Again</button>
-            </form>
+            <button class="reset-btn">Detect Again</button>
         </div>
 
     </div>
