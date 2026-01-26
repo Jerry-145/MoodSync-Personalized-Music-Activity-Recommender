@@ -47,14 +47,27 @@ An AI-powered web application that detects a user’s emotion using facial expre
 ## 📂 Project Structure
 
 Backend/
+
 ├── face_emotion.py
+
+├── app.py
+
 ├── emotion.txt
-├── haarcascade_frontalface_default.xml
+
 └── models/
+
 └── emotion_model.hdf5
 
+├── haarcascade_frontalface_default.xml
+
+
 Frontend/
+
 ├── index.html
+
 └── static/
+
 ├── style.css
+
 └── script.js
+
