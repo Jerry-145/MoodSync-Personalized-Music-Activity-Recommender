@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoodSync – Emotion Based Music</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>🎧 MoodSync</h1>
+        <p>Your mood, your music — powered by AI</p>
+    </header>
+
+    <div class="card">
+
+        <h2>Select Your Mood</h2>
+
+        <div class="emoji-box">
+            <button class="emoji-btn" data-emoji="😊" data-name="Happy">😊</button>
+            <button class="emoji-btn" data-emoji="😢" data-name="Sad">😢</button>
+            <button class="emoji-btn" data-emoji="😡" data-name="Angry">😡</button>
+            <button class="emoji-btn" data-emoji="❤️" data-name="Love">❤️</button>
+        </div>
+
+        <p id="selectedText" class="hint">No mood selected</p>
+
+        <button id="emojiSubmit" class="primary-btn" disabled>
+            Get Recommendations
+        </button>
+
+        <div class="divider">OR</div>
+
+        <button id="cameraBtn" class="secondary-btn">
+            📷 Detect Emotion Using Camera
+        </button>
+
+    </div>
+
+    <div class="card result" style="display:none;">
+        <h2 id="emotionTitle"></h2>
+        <div class="track-list"></div>
+    </div>
+
+    <footer>
+        Made by <strong>Abhee B Vasava</strong>
+    </footer>
+
+</div>
+
+<script src="static/script.js"></script>
+</body>
+</html>

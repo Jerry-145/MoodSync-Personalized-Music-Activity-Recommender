@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    width: 100%;
+    max-width: 480px;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    text-align: center;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #1f2937;
+}
+
+.emoji-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.emoji-btn {
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: #f3f4f6;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.emoji-btn:hover {
+    transform: scale(1.15);
+}
+
+.emoji-btn.selected {
+    background: #4f46e5;
+    box-shadow: 0 0 18px rgba(79,70,229,0.7);
+}
+
+.hint {
+    font-size: 14px;
+    color: #555;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.primary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.secondary-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #4f46e5;
+    background: transparent;
+    color: #4f46e5;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.divider {
+    margin: 18px 0;
+    color: #aaa;
+    font-size: 13px;
+}
+
+.result h2 {
+    margin-bottom: 15px;
+}
+
+.track-list div {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.track-list strong {
+    color: #111827;
+}
+
+.track-list audio {
+    width: 100%;
+    margin-top: 6px;
+}
+
+.track-list a {
+    font-size: 13px;
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    opacity: 0.85;
+}
