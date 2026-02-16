@@ -18,6 +18,14 @@
 
         <h2>Select Your Mood</h2>
 
+        <div style="margin-bottom:15px;">
+            <input type="text" id="searchInput" placeholder="Search song or artist..."
+                   style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+            <button id="searchBtn" class="primary-btn" style="margin-top:10px;">
+                🔍 Search
+            </button>
+        </div>
+
         <div class="emoji-box">
             <button class="emoji-btn" data-emoji="😊" data-name="Happy">😊</button>
             <button class="emoji-btn" data-emoji="😢" data-name="Sad">😢</button>
@@ -30,13 +38,19 @@
         <button id="emojiSubmit" class="primary-btn" disabled>
             Get Recommendations
         </button>
-
         <div class="divider">OR</div>
-
         <button id="cameraBtn" class="secondary-btn">
             📷 Detect Emotion Using Camera
         </button>
-
+        <a href="/history_page">
+            <button class="secondary-btn">📜 View History</button>
+        </a>
+        <button id="popularBtn" class="secondary-btn">
+            🔥 View Popular Songs
+        </button>
+        <a href="/analytics_page">
+            <button class="secondary-btn">📊 View Analytics</button>
+        </a>
     </div>
 
     <div class="card result" style="display:none;">

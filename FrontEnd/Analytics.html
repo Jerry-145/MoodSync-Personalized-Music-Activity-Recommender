@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics | MoodSync</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>📊 Mood Analytics</h1>
+        <p>Your listening insights</p>
+    </header>
+
+    <div class="card">
+        <div id="analyticsContent"></div>
+    </div>
+
+    <footer>
+        <a href="/">⬅ Back to Home</a>
+    </footer>
+
+</div>
+
+<script>
+async function loadAnalytics() {
+    const res = await fetch("/analytics");
+    const data = await res.json();
+
+    const container = document.getElementById("analyticsContent");
+
+    if (data.total_plays === 0) {
+        container.innerHTML = "<p>No listening data yet.</p>";
+        return;
+    }
+
+    container.innerHTML = `
+        <p><strong>Total Songs Played:</strong> ${data.total_plays}</p>
+        <p><strong>Most Frequent Emotion:</strong>
+            ${data.most_emotion ? data.most_emotion.emotion : "N/A"}
+        </p>
+        <p><strong>Most Played Song:</strong>
+            ${data.most_song ? data.most_song.song_name + " - " + data.most_song.artist : "N/A"}
+        </p>
+    `;
+}
+
+loadAnalytics();
+</script>
+
+</body>
+</html>

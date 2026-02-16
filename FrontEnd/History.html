@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>History | MoodSync</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>📜 Listening History</h1>
+        <p>Your previously played songs</p>
+    </header>
+
+    <div class="card">
+        <div id="historyList"></div>
+    </div>
+
+    <footer>
+        <a href="/">⬅ Back to Home</a>
+    </footer>
+
+</div>
+
+<script>
+async function loadHistory() {
+    const res = await fetch("/history");
+    const data = await res.json();
+
+    const container = document.getElementById("historyList");
+
+    if (data.length === 0) {
+        container.innerHTML = "<p>No songs played yet.</p>";
+        return;
+    }
+
+    data.forEach(item => {
+        container.innerHTML += `
+            <div>
+                <strong>${item.song_name}</strong> - ${item.artist}<br>
+                Emotion: ${item.emotion}<br>
+                <small>${item.timestamp}</small>
+            </div><hr>
+        `;
+    });
+}
+
+loadHistory();
+</script>
+
+</body>
+</html>

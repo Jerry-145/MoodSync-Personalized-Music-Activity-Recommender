@@ -146,3 +146,30 @@ footer {
     font-size: 13px;
     opacity: 0.85;
 }
+
+.track-card {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.track-card:hover {
+    transform: translateY(-4px);
+}
+
+.track-info {
+    margin-bottom: 8px;
+}
+
+.track-info p {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.track-card audio {
+    width: 100%;
+}

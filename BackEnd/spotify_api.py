@@ -7,13 +7,12 @@ CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 def get_access_token():
     if not CLIENT_ID or not CLIENT_SECRET:
-        print("❌ Spotify credentials not set")
         return None
 
     auth = f"{CLIENT_ID}:{CLIENT_SECRET}"
     encoded = base64.b64encode(auth.encode()).decode()
 
-    response = requests.post(
+    res = requests.post(
         "https://accounts.spotify.com/api/token",
         headers={
             "Authorization": f"Basic {encoded}",
@@ -22,20 +21,15 @@ def get_access_token():
         data={"grant_type": "client_credentials"}
     )
 
-    data = response.json()
-
-    if "access_token" not in data:
-        print("❌ Spotify token error:", data)
-        return None
-
-    return data["access_token"]
+    data = res.json()
+    return data.get("access_token")
 
 def search_track(track_name, artist):
     token = get_access_token()
     if not token:
         return None
 
-    response = requests.get(
+    res = requests.get(
         "https://api.spotify.com/v1/search",
         headers={"Authorization": f"Bearer {token}"},
         params={
@@ -45,16 +39,14 @@ def search_track(track_name, artist):
         }
     )
 
-    result = response.json()
-
-    if "tracks" not in result or not result["tracks"]["items"]:
+    items = res.json().get("tracks", {}).get("items", [])
+    if not items:
         return None
 
-    track = result["tracks"]["items"][0]
+    track = items[0]
 
     return {
         "name": track["name"],
         "artist": track["artists"][0]["name"],
-        "preview_url": track["preview_url"],
-        "spotify_url": track["external_urls"]["spotify"]
+        "preview_url": track["preview_url"]
     }
