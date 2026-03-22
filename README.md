@@ -1,73 +1,114 @@
-# MoodSync-Personalized-Music-Activity-Recommender
-MoodSync is a web-based application that recommends personalized music and activities based on the user’s mood. Using Spotify audio features like energy and valence, it suggests suitable songs and activities to improve emotional well-being and user experience.
+🎧 MoodSync – Emotion-Based Music Recommendation System
 
-# 🎧 Emotion-Based Music Recommendation System
+MoodSync is an AI-powered web application that detects a user's emotion and recommends music accordingly. It uses facial emotion recognition, emoji input, and Spotify API integration to deliver personalized song suggestions.
 
-An AI-powered web application that detects a user’s emotion using facial expressions or emoji selection and recommends music based on the detected mood.
+🚀 Features
+😊 Emotion Detection via Emoji
+📷 Real-time Facial Emotion Detection using AI
+🎵 Music Recommendation based on Mood
+🔍 Song Search Functionality
+🔥 Popular Songs Section
+📜 Listening History Tracking
+📊 User Analytics Dashboard
+🔐 User Authentication (Login/Signup)
+🧠 How It Works
+User selects mood via emoji OR uses camera
+Emotion is detected using ML model
+Songs are filtered from dataset based on emotion
+Spotify API fetches playable links
+Results are shown in UI
+History and analytics stored using SQLite
+🛠 Tech Stack
+🔹 Backend
+Python
+Flask
+SQLite (Database)
+🔹 Frontend
+HTML, CSS, JavaScript
+Responsive UI
+🔹 Machine Learning
+OpenCV
+Keras (Emotion Model)
+Haar Cascade (Face Detection)
+🔹 APIs
+Spotify Web API
+📁 Project Structure
+MoodSync/
+│
+├── backend/
+│   ├── app.py
+│   ├── face_emotion.py
+│   ├── recommendation.py
+│   ├── spotify_api.py
+│   ├── emotion.txt
+│   └── data/
+│       └── dataset.csv
+│
+├── frontend/
+│   ├── index.html
+│   ├── login.html
+│   ├── signup.html
+│   ├── history.html
+│   ├── analytics.html
+│   └── static/
+│       ├── style.css
+│       ├── auth.css
+│       └── script.js
+│
+└── README.md
+⚙️ Installation & Setup
+1️⃣ Clone the Repository
+git clone https://github.com/your-username/moodsync.git
+cd moodsync
+2️⃣ Install Dependencies
+pip install flask pandas opencv-python keras requests
+3️⃣ Set Environment Variables (IMPORTANT)
+export SPOTIFY_CLIENT_ID=your_client_id
+export SPOTIFY_CLIENT_SECRET=your_client_secret
 
----
+(Windows users use set instead of export)
 
-## 🚀 Features
+4️⃣ Run the Application
+python app.py
+5️⃣ Open in Browser
+http://127.0.0.1:5000
+📸 Screens (Your UI)
+Home Page (Mood Selection + Search)
+Login / Signup
+History Page
+Analytics Dashboard
+📊 Database Schema
+Users Table
+id
+username
+password
+History Table
+username
+emotion
+song_name
+artist
+timestamp
+🎯 Emotion Logic
+Emotion	Filter Logic
+Happy	High valence & energy
+Sad	Low valence & energy
+Angry	Low valence & high energy
+Love	High valence & medium energy
+⚠️ Important Notes
+Requires webcam for emotion detection
+Spotify API may not return preview for all songs
+Emotion model file must be present in /models
+🔮 Future Improvements
+🎨 Better UI/UX (animations, dark mode)
+📱 Mobile responsiveness
+🤖 Better ML model accuracy
+💾 Cloud database (Firebase / MongoDB)
+🎧 Full Spotify playback integration
+📈 Advanced analytics (charts)
+👨‍💻 Author
 
-- Real-time face detection using OpenCV
-- Emotion recognition using a deep learning model
-- Emoji-based emotion selection with interactive UI
-- Spotify-inspired music recommendation interface
-- Clean and user-friendly frontend
-- Modular backend and frontend structure
+Abhee B Vasava
 
----
+⭐ If You Like This Project
 
-## 🧠 How It Works
-
-1. User selects an emoji or clicks the camera button
-2. Camera captures facial expression (IP Webcam or local webcam)
-3. Emotion is detected using a trained CNN model
-4. Detected emotion is stored
-5. Music recommendations are shown based on emotion
-
----
-
-## 🛠️ Technologies Used
-
-### Backend
-- Python
-- OpenCV
-- TensorFlow / Keras
-- NumPy
-
-### Frontend
-- HTML
-- Static 
-- -CSS
-- -JavaScript
-
----
-
-## 📂 Project Structure
-
-Backend/
-
-├── face_emotion.py
-
-├── app.py
-
-├── emotion.txt
-
-└── models/
-
-└── emotion_model.hdf5
-
-├── haarcascade_frontalface_default.xml
-
-
-Frontend/
-
-├── index.html
-
-└── static/
-
-├── style.css
-
-└── script.js
-
+Give it a ⭐ on GitHub and share it!
