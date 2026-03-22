@@ -2,7 +2,51 @@
 <html>
 <head>
     <title>History | MoodSync</title>
-    <link rel="stylesheet" href="static/style.css">
+    <style>
+        .history-item {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+
+        .history-item:hover {
+            transform: scale(1.02);
+        }
+
+        .song-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .artist {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .emotion {
+            margin-top: 6px;
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: white;
+        }
+
+        .Happy { background: #22c55e; }
+        .Sad { background: #3b82f6; }
+        .Angry { background: #ef4444; }
+        .Search { background: #a855f7; }
+
+        .time {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 6px;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,18 +74,27 @@ async function loadHistory() {
 
     const container = document.getElementById("historyList");
 
-    if (data.length === 0) {
-        container.innerHTML = "<p>No songs played yet.</p>";
+    if (!data || data.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>No songs played yet 🎧</p>";
         return;
     }
 
+    container.innerHTML = "";
+
     data.forEach(item => {
         container.innerHTML += `
-            <div>
-                <strong>${item.song_name}</strong> - ${item.artist}<br>
-                Emotion: ${item.emotion}<br>
-                <small>${item.timestamp}</small>
-            </div><hr>
+            <div class="history-item">
+                <div class="song-title">${item.song_name}</div>
+                <div class="artist">${item.artist}</div>
+
+                <div class="emotion ${item.emotion}">
+                    ${item.emotion}
+                </div>
+
+                <div class="time">
+                    ${new Date(item.timestamp).toLocaleString()}
+                </div>
+            </div>
         `;
     });
 }
