@@ -1,38 +1,64 @@
-🎧 MoodSync – Emotion-Based Music Recommendation System
+# 🎧 MoodSync – Emotion-Based Music Recommendation System
 
-MoodSync is an AI-powered web application that detects a user's emotion and recommends music accordingly. It uses facial emotion recognition, emoji input, and Spotify API integration to deliver personalized song suggestions.
+> *Your mood, your music — powered by AI* 🎶
 
-🚀 Features
-😊 Emotion Detection via Emoji
-📷 Real-time Facial Emotion Detection using AI
-🎵 Music Recommendation based on Mood
-🔍 Song Search Functionality
-🔥 Popular Songs Section
-📜 Listening History Tracking
-📊 User Analytics Dashboard
-🔐 User Authentication (Login/Signup)
-🧠 How It Works
-User selects mood via emoji OR uses camera
-Emotion is detected using ML model
-Songs are filtered from dataset based on emotion
-Spotify API fetches playable links
-Results are shown in UI
-History and analytics stored using SQLite
-🛠 Tech Stack
-🔹 Backend
-Python
-Flask
-SQLite (Database)
-🔹 Frontend
-HTML, CSS, JavaScript
-Responsive UI
-🔹 Machine Learning
-OpenCV
-Keras (Emotion Model)
-Haar Cascade (Face Detection)
-🔹 APIs
-Spotify Web API
-📁 Project Structure
+---
+
+## 🚀 Overview
+
+**MoodSync** is an AI-powered web application that detects a user's emotion and recommends music accordingly. It combines **facial emotion recognition**, **emoji-based input**, and **Spotify API integration** to deliver a personalized music experience.
+
+---
+
+## ✨ Features
+
+- 😊 **Emotion Detection via Emoji**
+- 📷 **Real-time Facial Emotion Detection (AI)**
+- 🎵 **Mood-Based Music Recommendation**
+- 🔍 **Search Songs & Artists**
+- 🔥 **Popular Songs Section**
+- 📜 **Listening History Tracking**
+- 📊 **User Analytics Dashboard**
+- 🔐 **User Authentication (Login & Signup)**
+
+---
+
+## 🧠 How It Works
+
+```
+1. User selects mood (emoji) OR uses camera
+2. Emotion is detected using ML model
+3. Dataset filters songs based on emotion
+4. Spotify API fetches preview + links
+5. Songs are displayed in UI
+6. User activity is stored for history & analytics
+```
+
+---
+
+## 🛠 Tech Stack
+
+### 🔹 Backend
+- Python 🐍
+- Flask 🌐
+- SQLite 🗄️
+
+### 🔹 Frontend
+- HTML, CSS, JavaScript 🎨
+
+### 🔹 Machine Learning
+- OpenCV 📷
+- Keras 🤖
+- Haar Cascade (Face Detection)
+
+### 🔹 APIs
+- Spotify Web API 🎧
+
+---
+
+## 📁 Project Structure
+
+```
 MoodSync/
 │
 ├── backend/
@@ -56,59 +82,116 @@ MoodSync/
 │       └── script.js
 │
 └── README.md
-⚙️ Installation & Setup
-1️⃣ Clone the Repository
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/your-username/moodsync.git
 cd moodsync
-2️⃣ Install Dependencies
-pip install flask pandas opencv-python keras requests
-3️⃣ Set Environment Variables (IMPORTANT)
+```
+
+---
+
+### 2️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 3️⃣ Set Environment Variables
+
+```bash
 export SPOTIFY_CLIENT_ID=your_client_id
 export SPOTIFY_CLIENT_SECRET=your_client_secret
+```
 
-(Windows users use set instead of export)
+👉 For Windows:
+```bash
+set SPOTIFY_CLIENT_ID=your_client_id
+set SPOTIFY_CLIENT_SECRET=your_client_secret
+```
 
-4️⃣ Run the Application
+---
+
+### 4️⃣ Run the Application
+
+```bash
 python app.py
-5️⃣ Open in Browser
+```
+
+---
+
+### 5️⃣ Open in Browser
+
+```
 http://127.0.0.1:5000
-📸 Screens (Your UI)
-Home Page (Mood Selection + Search)
-Login / Signup
-History Page
-Analytics Dashboard
-📊 Database Schema
-Users Table
-id
-username
-password
-History Table
-username
-emotion
-song_name
-artist
-timestamp
-🎯 Emotion Logic
-Emotion	Filter Logic
-Happy	High valence & energy
-Sad	Low valence & energy
-Angry	Low valence & high energy
-Love	High valence & medium energy
-⚠️ Important Notes
-Requires webcam for emotion detection
-Spotify API may not return preview for all songs
-Emotion model file must be present in /models
-🔮 Future Improvements
-🎨 Better UI/UX (animations, dark mode)
-📱 Mobile responsiveness
-🤖 Better ML model accuracy
-💾 Cloud database (Firebase / MongoDB)
-🎧 Full Spotify playback integration
-📈 Advanced analytics (charts)
-👨‍💻 Author
+```
 
-Abhee B Vasava
+---
 
-⭐ If You Like This Project
+## 📊 Database Schema
 
-Give it a ⭐ on GitHub and share it!
+### 👤 Users Table
+- `id`
+- `username`
+- `password`
+
+### 🎵 History Table
+- `username`
+- `emotion`
+- `song_name`
+- `artist`
+- `timestamp`
+
+---
+
+## 🎯 Emotion Logic
+
+| Emotion | Filter Logic |
+|--------|-------------|
+| 😊 Happy | High valence & energy |
+| 😢 Sad | Low valence & energy |
+| 😡 Angry | Low valence & high energy |
+| ❤️ Love | High valence & medium energy |
+
+---
+
+## ⚠️ Important Notes
+
+- 📷 Webcam required for emotion detection  
+- 🎧 Spotify may not provide preview for all songs  
+- 🤖 ML model must be placed inside `/models` folder  
+
+---
+
+## 🔮 Future Improvements
+
+- 🎨 Modern UI with animations  
+- 📱 Mobile responsiveness  
+- 🤖 Improved ML model accuracy  
+- ☁️ Cloud database (Firebase / MongoDB)  
+- 🎧 Full Spotify playback integration  
+- 📈 Advanced analytics  
+
+---
+
+## 👨‍💻 Author
+
+**Abhee B Vasava**
+
+---
+
+## ⭐ Support
+
+If you like this project:
+
+- ⭐ Star the repo  
+- 🔁 Share it  
+- 💡 Contribute ideas  
