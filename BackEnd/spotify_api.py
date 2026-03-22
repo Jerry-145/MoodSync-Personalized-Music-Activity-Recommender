@@ -24,29 +24,44 @@ def get_access_token():
     data = res.json()
     return data.get("access_token")
 
-def search_track(track_name, artist):
+def search_track(track_name, artist=""):
     token = get_access_token()
     if not token:
         return None
+
+    query = track_name if not artist else f"{track_name} {artist}"
 
     res = requests.get(
         "https://api.spotify.com/v1/search",
         headers={"Authorization": f"Bearer {token}"},
         params={
-            "q": f"{track_name} {artist}",
+            "q": query,
             "type": "track",
-            "limit": 1
+            "limit": 10   # 🔥 increase results
         }
     )
 
-    items = res.json().get("tracks", {}).get("items", [])
+    data = res.json()
+    items = data.get("tracks", {}).get("items", [])
+
     if not items:
         return None
 
-    track = items[0]
+    # 🔥 IMPORTANT: find track WITH preview
+    for track in items:
+        if track["preview_url"]:
+            return {
+                "name": track["name"],
+                "artist": track["artists"][0]["name"],
+                "preview_url": track["preview_url"],
+                "spotify_url": track["external_urls"]["spotify"]
+            }
 
+    # fallback (no preview)
+    track = items[0]
     return {
         "name": track["name"],
         "artist": track["artists"][0]["name"],
-        "preview_url": track["preview_url"]
+        "preview_url": track["preview_url"],
+        "spotify_url": track["external_urls"]["spotify"]  # ⭐ IMPORTANT
     }

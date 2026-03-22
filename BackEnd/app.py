@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, jsonify, send_from_directory, sessio
 import os
 import sqlite3
 import subprocess
+import urllib.parse
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from recommendation import recommend_from_dataset
@@ -28,7 +30,7 @@ app = Flask(__name__, static_folder=STATIC_DIR)
 app.secret_key = "moodsync_secret_key"
 
 # =========================
-# DATABASE FUNCTIONS
+# DATABASE
 # =========================
 def get_db():
     conn = sqlite3.connect(DB_PATH)
@@ -37,6 +39,15 @@ def get_db():
 
 def init_db():
     conn = get_db()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    """)
+
     conn.execute("""
         CREATE TABLE IF NOT EXISTS history (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,6 +67,7 @@ init_db()
 # =========================
 # ROUTES
 # =========================
+
 @app.route("/")
 def home():
     if "user" not in session:
@@ -113,8 +125,20 @@ def logout():
     session.clear()
     return redirect("/login")
 
+# ---------- ANALYTICS ----------
+@app.route("/analytics_page")
+def analytics_page():
+    if "user" not in session:
+        return redirect("/login")
+    return send_from_directory(FRONTEND_DIR, "analytics.html")
 
-# ---------- EMOJI DETECTION ----------
+# ---------- HISTORY ----------
+@app.route("/history_page")
+def history_page():
+    if "user" not in session:
+        return redirect("/login")
+    return send_from_directory(FRONTEND_DIR, "history.html")
+# ---------- EMOJI ----------
 @app.route("/emoji", methods=["POST"])
 def emoji_detect():
     emoji = request.json.get("emoji")
@@ -123,54 +147,50 @@ def emoji_detect():
         "😊": "Happy",
         "😢": "Sad",
         "😡": "Angry",
-        "❤️": "Love"
+        "❤️": "Happy"
     }
 
-    emotion = emoji_map.get(emoji, "Neutral")
+    emotion = emoji_map.get(emoji, "Happy")
 
-    try:
-        with open(EMOTION_FILE, "w", encoding="utf-8") as f:
-            f.write(emotion)
-    except Exception as e:
-        print("Emotion file write error:", e)
+    with open(EMOTION_FILE, "w", encoding="utf-8") as f:
+        f.write(emotion)
 
     return recommend(emotion)
 
-# ---------- CAMERA DETECTION ----------
+# ---------- CAMERA ----------
 @app.route("/detect", methods=["POST"])
 def camera_detect():
-    emotion = "Neutral"
 
-    try:
-        subprocess.run(
-            ["python", "face_emotion.py"],
-            cwd=BASE_DIR,
-            timeout=20
-        )
-    except Exception as e:
-        print("Camera process error:", e)
+    subprocess.run(["python", "face_emotion.py"], cwd=BASE_DIR)
 
-    try:
-        if os.path.exists(EMOTION_FILE):
-            with open(EMOTION_FILE, "r", encoding="utf-8") as f:
-                emotion = f.read().strip()
-    except Exception as e:
-        print("Emotion file read error:", e)
+    emotion = "Happy"
+
+    if os.path.exists(EMOTION_FILE):
+        with open(EMOTION_FILE, "r", encoding="utf-8") as f:
+            file_emotion = f.read().strip()
+            if file_emotion:
+                emotion = file_emotion
+
+    print("🚀 Final Emotion:", emotion)
 
     return recommend(emotion)
 
-# ---------- RECOMMENDATION ----------
+# ---------- RECOMMEND ----------
 def recommend(emotion):
+
     dataset_tracks = recommend_from_dataset(emotion)
     final_tracks = []
 
     for t in dataset_tracks:
+
         api_data = search_track(t["track_name"], t["artist"])
 
         final_tracks.append({
             "name": t["track_name"],
             "artist": t["artist"],
-            "preview_url": api_data["preview_url"] if api_data else None
+            "preview_url": api_data["preview_url"] if api_data else None,
+            "spotify_url": api_data["spotify_url"] if api_data else
+                f"https://open.spotify.com/search/{urllib.parse.quote(t['track_name'] + ' ' + t['artist'])}"
         })
 
     return jsonify({
@@ -178,16 +198,30 @@ def recommend(emotion):
         "tracks": final_tracks
     })
 
-@app.route("/history_page")
-def history_page():
-    if "user" not in session:
-        return redirect("/login")
-    return send_from_directory(FRONTEND_DIR, "history.html")
+# ---------- SEARCH ----------
+@app.route("/search")
+def search():
 
+    query = request.args.get("q", "").strip()
+    if not query:
+        return jsonify([])
+
+    result = search_track(query, "")
+
+    if result:
+        return jsonify([result])
+
+    # fallback
+    return jsonify([{
+        "name": query,
+        "artist": "",
+        "preview_url": None,
+        "spotify_url": f"https://open.spotify.com/search/{urllib.parse.quote(query)}"
+    }])
+
+# ---------- POPULAR ----------
 @app.route("/popular")
 def popular():
-    if "user" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
 
     popular_tracks = [
         {"name": "Blinding Lights", "artist": "The Weeknd"},
@@ -200,15 +234,54 @@ def popular():
     final_tracks = []
 
     for track in popular_tracks:
+
         api_data = search_track(track["name"], track["artist"])
+
         final_tracks.append({
             "name": track["name"],
             "artist": track["artist"],
-            "preview_url": api_data["preview_url"] if api_data else None
+            "preview_url": api_data["preview_url"] if api_data else None,
+            "spotify_url": api_data["spotify_url"] if api_data else
+                f"https://open.spotify.com/search/{urllib.parse.quote(track['name'] + ' ' + track['artist'])}"
         })
 
     return jsonify(final_tracks)
 
+# ---------- SAVE HISTORY ----------
+@app.route("/save_history", methods=["POST"])
+def save_history():
+
+    if "user" not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    data = request.json
+
+    song_name = data.get("song_name")
+    artist = data.get("artist")
+    emotion = data.get("emotion")
+
+    conn = get_db()
+
+    conn.execute("""
+        INSERT INTO history (username, emotion, song_name, artist)
+        VALUES (?, ?, ?, ?)
+    """, (session["user"], emotion, song_name, artist))
+
+    conn.commit()
+
+    count = conn.execute("SELECT COUNT(*) FROM history").fetchone()[0]
+    print("📊 Total history rows:", count)
+
+    conn.close()
+
+    return jsonify({"status": "saved"})
+
+# ---------- STATIC ----------
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(STATIC_DIR, filename)
+
+# ---------- ANALYTICS ----------
 @app.route("/analytics")
 def analytics():
     if "user" not in session:
@@ -248,64 +321,26 @@ def analytics():
         "most_song": dict(most_song) if most_song else None
     })
 
-@app.route("/analytics_page")
-def analytics_page():
+# ---------- HISTORY ----------
+@app.route("/history")
+def history():
     if "user" not in session:
-        return redirect("/login")
-    return send_from_directory(FRONTEND_DIR, "analytics.html")
-
-@app.route("/search", methods=["GET"])
-def search():
-    if "user" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
-
-    query = request.args.get("q")
-    if not query:
         return jsonify([])
-
-    from spotify_api import search_track  # already exists
-
-    # Search directly using Spotify API
-    token = search_track(query, "")  # quick search using name only
-
-    if not token:
-        return jsonify([])
-
-    return jsonify([{
-        "name": token["name"],
-        "artist": token["artist"],
-        "preview_url": token["preview_url"]
-    }])
-
-# ---------- History Saved ----------
-@app.route("/save_history", methods=["POST"])
-def save_history():
-    if "user" not in session:
-        return jsonify({"error": "Unauthorized"}), 401
-
-    data = request.json
-    song_name = data.get("song_name")
-    artist = data.get("artist")
-    emotion = data.get("emotion")
 
     conn = get_db()
-    conn.execute("""
-        INSERT INTO history (username, emotion, song_name, artist)
-        VALUES (?, ?, ?, ?)
-    """, (session["user"], emotion, song_name, artist))
-    conn.commit()
+
+    rows = conn.execute("""
+        SELECT song_name, artist, emotion, timestamp
+        FROM history
+        WHERE username = ?
+        ORDER BY timestamp DESC
+    """, (session["user"],)).fetchall()
+
     conn.close()
 
-    return jsonify({"status": "saved"})
-
-
-# ---------- STATIC FILES ----------
-@app.route("/static/<path:filename>")
-def static_files(filename):
-    return send_from_directory(STATIC_DIR, filename)
-
+    return jsonify([dict(row) for row in rows])
 # =========================
-# RUN SERVER
+# RUN
 # =========================
 if __name__ == "__main__":
     app.run(debug=True)
